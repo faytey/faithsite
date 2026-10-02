@@ -27,8 +27,8 @@ function Plan({ text }: { text: string }) {
     if (!line) { flush(); continue; }
     const h = line.match(/^#{1,4}\s+(.*)/);
     const b = line.match(/^(?:[-*]|\d+\.)\s+(.*)/);
-    if (h) { flush(); out.push(<h3 key={`h${out.length}`} className="mt-6 text-lg font-bold text-gold first:mt-0">{h[1]}</h3>); }
-    else if (b) list.push(b[1]);
+    if (h) { flush(); out.push(<h3 key={`h${out.length}`} className="mt-6 text-lg font-bold text-gold first:mt-0">{h[1] ?? ""}</h3>); }
+    else if (b) list.push(b[1] ?? "");
     else { flush(); out.push(<p key={`p${out.length}`} className="mt-2">{inline(line)}</p>); }
   }
   flush();
@@ -43,7 +43,7 @@ export function PlanBuilder() {
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const v = Object.fromEntries(new FormData(e.currentTarget)) as Record<string, string>;
+    const v = Object.fromEntries(new FormData(e.currentTarget)) as { business?: string; traction?: string; goals?: string; stage?: string };
     if ((v.business?.trim().length ?? 0) < 20 || (v.traction?.trim().length ?? 0) < 5 || (v.goals?.trim().length ?? 0) < 10) {
       setStatus("error");
       setError("Please add a little more detail to each field so the plan can be specific.");

@@ -32,7 +32,7 @@ export function CountUp({ to, suffix = "" }: { to: number; suffix?: string }) {
     if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     setVal(0);
     const io = new IntersectionObserver(([en]) => {
-      if (!en.isIntersecting) return;
+      if (!en?.isIntersecting) return;
       io.disconnect();
       const start = performance.now();
       const step = (t: number) => {

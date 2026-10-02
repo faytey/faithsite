@@ -259,7 +259,7 @@ function Index() {
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {PILLARS.map(([t, d], i) => (
               <article key={t} style={{ "--d": `${i * 100}ms` } as React.CSSProperties} className="reveal lift rounded-3xl border border-border bg-card p-8 card-depth">
-                <span aria-hidden="true" className="icon-bounce inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary font-display text-lg font-extrabold text-primary-foreground">{t[0]}</span>
+                <span aria-hidden="true" className="icon-bounce inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary font-display text-lg font-extrabold text-primary-foreground">{t?.[0]}</span>
                 <p className="mt-5 font-display text-sm font-bold text-gold">0{i + 1}</p>
                 <h3 className="mt-3 text-3xl font-extrabold uppercase tracking-tight">{t}</h3>
                 <p className="mt-4 text-muted-foreground">{d}</p>
@@ -282,7 +282,7 @@ function Index() {
                       <li key={x} className="flex gap-3"><span aria-hidden="true" className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />{x}</li>
                     ))}
                   </ul>
-                  <BookCall location={`service-${t.split(" ")[0].toLowerCase()}`} variant="outline" className="mt-8" />
+                  <BookCall location={`service-${(t.split(" ")[0] ?? "").toLowerCase()}`} variant="outline" className="mt-8" />
                 </article>
               ))}
             </div>
