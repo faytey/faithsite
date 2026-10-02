@@ -27,9 +27,9 @@ export function BookCall({
 
 export function btn(variant: "gold" | "outline" = "gold") {
   return cn(
-    "inline-flex min-h-12 items-center justify-center rounded-full px-6 text-base font-semibold transition-all",
+    "btn-shine inline-flex min-h-12 items-center justify-center rounded-full px-6 text-base font-semibold transition-all",
     variant === "gold"
-      ? "bg-primary text-primary-foreground hover:bg-gold-light shadow-[0_10px_30px_-10px_var(--primary)]"
-      : "border border-primary/60 text-foreground hover:bg-primary/10",
+      ? "bg-primary text-primary-foreground hover:bg-gold-light shadow-[0_10px_24px_-10px_var(--gold-deep)]"
+      : "border-2 border-foreground/80 text-foreground hover:bg-foreground/5",
   );
 }

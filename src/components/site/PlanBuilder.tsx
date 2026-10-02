@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { BookCall } from "./BookCall";
 
 const field =
-  "mt-2 block w-full rounded-xl border border-input bg-secondary px-4 py-3 text-base text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+  "mt-2 block w-full rounded-xl border border-input bg-card px-4 py-3 text-base text-foreground placeholder:text-muted-foreground field-ring";
 
 function inline(text: string) {
   return text.split(/(\*\*[^*]+\*\*)/g).map((p, i) =>
@@ -16,7 +16,7 @@ function Plan({ text }: { text: string }) {
   const flush = () => {
     if (list.length)
       out.push(
-        <ul key={`u${out.length}`} className="mt-2 list-disc space-y-1.5 pl-5 marker:text-primary">
+        <ul key={`u${out.length}`} className="mt-2 list-disc space-y-1.5 pl-5 marker:text-gold">
           {list.map((l, i) => <li key={i}>{inline(l)}</li>)}
         </ul>,
       );
@@ -27,7 +27,7 @@ function Plan({ text }: { text: string }) {
     if (!line) { flush(); continue; }
     const h = line.match(/^#{1,4}\s+(.*)/);
     const b = line.match(/^(?:[-*]|\d+\.)\s+(.*)/);
-    if (h) { flush(); out.push(<h3 key={`h${out.length}`} className="mt-6 text-lg font-bold text-primary first:mt-0">{h[1]}</h3>); }
+    if (h) { flush(); out.push(<h3 key={`h${out.length}`} className="mt-6 text-lg font-bold text-gold first:mt-0">{h[1]}</h3>); }
     else if (b) list.push(b[1]);
     else { flush(); out.push(<p key={`p${out.length}`} className="mt-2">{inline(line)}</p>); }
   }
@@ -112,7 +112,7 @@ export function PlanBuilder() {
           <textarea id="goals" name="goals" rows={3} maxLength={1000} required className={field} placeholder="e.g. 50 paying customers and a pre-seed raise" />
         </div>
         <div className="flex flex-wrap gap-3">
-          <button type="submit" disabled={status === "loading"} className="inline-flex min-h-12 items-center justify-center rounded-full bg-primary px-6 font-semibold text-primary-foreground transition hover:bg-gold-light disabled:opacity-60">
+          <button type="submit" disabled={status === "loading"} className="inline-flex min-h-12 items-center justify-center btn-shine rounded-full bg-primary px-6 font-semibold text-primary-foreground transition hover:bg-gold-light disabled:opacity-60">
             {status === "loading" ? "Building your plan…" : "Generate my action plan"}
           </button>
           {status === "loading" && (
@@ -124,7 +124,7 @@ export function PlanBuilder() {
         <p className="text-xs text-muted-foreground">Your answers are used only to generate this plan and are not saved. AI-generated guidance, not a guarantee of results.</p>
       </form>
 
-      <div aria-live="polite" className="rounded-3xl border border-primary/25 bg-secondary/60 p-6 sm:p-8">
+      <div aria-live="polite" className="rounded-3xl border border-border bg-cream p-6 sm:p-8">
         {status === "idle" && !plan && (
           <p className="text-muted-foreground">Your personalised Seen, Sold and Funded plan will appear here.</p>
         )}
