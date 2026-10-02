@@ -7,7 +7,7 @@ type Errors = Partial<Record<"fullName" | "email" | "message", string>>;
 const field =
   "mt-2 block w-full rounded-xl border border-input bg-card px-4 py-3 text-base text-foreground placeholder:text-muted-foreground field-ring";
 
-export function ContactForm({ presetTopic }: { presetTopic?: string }) {
+export function ContactForm({ presetTopic }: { presetTopic?: string | undefined }) {
   const [topic, setTopic] = useState<string>(TOPICS[0]);
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
