@@ -27,7 +27,7 @@ export function ContactForm({ presetTopic }: { presetTopic?: string | undefined 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
-    const v = Object.fromEntries(fd) as Record<string, string>;
+    const v = Object.fromEntries(fd) as { fullName?: string; email?: string; company?: string; message?: string; website?: string };
     const errs: Errors = {};
     if (!v.fullName?.trim()) errs.fullName = "Please enter your full name.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.email?.trim() ?? "")) errs.email = "Please enter a valid email address.";
@@ -41,11 +41,11 @@ export function ContactForm({ presetTopic }: { presetTopic?: string | undefined 
     try {
       const res = await submitContact({
         data: {
-          fullName: v.fullName,
-          email: v.email,
+          fullName: v.fullName ?? "",
+          email: v.email ?? "",
           company: v.company ?? "",
           topic: topic as (typeof TOPICS)[number],
-          message: v.message,
+          message: v.message ?? "",
           website: v.website ?? "",
         },
       });
