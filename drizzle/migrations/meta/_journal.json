@@ -8,6 +8,13 @@
       "when": 1790857379313,
       "tag": "0000_contact_analytics_plans",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1790998986280,
+      "tag": "0001_blog_articles_and_editor_roles",
+      "breakpoints": true
     }
   ]
 }
