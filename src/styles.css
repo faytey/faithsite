@@ -189,3 +189,19 @@ details[open]::details-content { height: auto; }
   .js .reveal { transform: none; }
   .lift:hover { transform: none; }
 }
+
+.blog-prose { color: var(--muted-foreground); line-height: 1.85; overflow-wrap: anywhere; }
+.blog-prose > * + * { margin-top: 1.3rem; }
+.blog-prose h2, .blog-prose h3 { color: var(--foreground); font-weight: 700; line-height: 1.25; margin-top: 2.4rem; }
+.blog-prose h2 { font-size: 1.65rem; }
+.blog-prose h3 { font-size: 1.3rem; }
+.blog-prose ul { list-style: disc; padding-left: 1.5rem; }
+.blog-prose ol { list-style: decimal; padding-left: 1.5rem; }
+.blog-prose li + li { margin-top: .5rem; }
+.blog-prose a { color: var(--blue); text-decoration: underline; }
+.blog-prose blockquote { border-left: 3px solid var(--primary); padding-left: 1.3rem; color: var(--foreground); font-style: italic; }
+.blog-prose img { max-width: 100%; height: auto; }
+.blog-prose pre { max-width: 100%; overflow-x: auto; padding: 1rem; background: var(--secondary); }
+.blog-prose code { overflow-wrap: anywhere; }
+.blog-prose table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; }
+.blog-prose th, .blog-prose td { border: 1px solid var(--border); padding: .5rem; }
