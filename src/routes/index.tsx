@@ -6,12 +6,16 @@ import { ContactForm } from "@/components/site/ContactForm";
 import { PlanBuilder } from "@/components/site/PlanBuilder";
 import { LINKEDIN, X_URL, CALENDLY } from "@/lib/analytics";
 import { CountUp, useReveal, useScrollState } from "@/components/site/motion";
+import { Link } from "@tanstack/react-router";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { postsQuery } from "@/lib/blog.queries";
+import { BlogCard } from "@/components/site/BlogCard";
 
-const SITE = "https://faithroberts.xyz/";
+const SITE = "https://faithroberts.site/";
 const TITLE = "Faith M. Roberts | GTM & Fundraising Support for Founders";
 const DESC =
   "I help founders get seen, sold and funded through positioning, go-to-market and investor readiness. Africa and emerging markets. Book a call.";
-const OG = "https://faithroberts.xyz/og-image.jpg";
+const OG = "https://faithroberts.site/og-image.jpg";
 
 const FAQS = [
   {
@@ -45,7 +49,7 @@ const jsonLd = [
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Faith M. Roberts",
-    url: "https://faithroberts.xyz",
+    url: "https://faithroberts.site",
     image: OG,
     jobTitle: "Growth & Venture Ecosystem Strategist",
     worksFor: { "@type": "Organization", name: "Dermon Capital" },
@@ -62,7 +66,7 @@ const jsonLd = [
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     name: "Faith M. Roberts",
-    url: "https://faithroberts.xyz",
+    url: "https://faithroberts.site",
     image: OG,
     areaServed: { "@type": "Place", name: "Africa" },
     description: DESC,
@@ -101,6 +105,7 @@ export const Route = createFileRoute("/")({
     ],
     scripts: jsonLd.map((d) => ({ type: "application/ld+json", children: JSON.stringify(d) })),
   }),
+  loader: ({ context }) => context.queryClient.ensureQueryData(postsQuery()).catch(() => []),
   component: Index,
 });
 
@@ -110,6 +115,7 @@ const NAV = [
   ["Action plan", "#action-plan"],
   ["About", "#about"],
   ["FAQ", "#faq"],
+  ["Blog", "/blog"],
   ["Contact", "#contact"],
 ] as const;
 
@@ -199,7 +205,7 @@ function Index() {
             <div className="blob absolute -left-24 top-10 h-[420px] w-[420px] rounded-full bg-primary/20 blur-3xl" />
             <div className="blob absolute right-0 top-40 h-[380px] w-[380px] rounded-full bg-blue/10 blur-3xl [animation-delay:-9s]" />
           </div>
-          <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-5 pb-16 pt-12 sm:px-8 lg:grid-cols-[1.15fr_1fr] lg:pb-24 lg:pt-20">
+          <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-5 pb-16 pt-12 sm:px-8 lg:grid-cols-[1.6fr_1fr] lg:pb-24 lg:pt-20">
             <div>
               <p className="hero-in text-sm font-semibold uppercase tracking-[0.2em] text-gold">GTM consultant for founders</p>
               <h1 className="mt-4 text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-6xl lg:text-7xl">
@@ -219,7 +225,7 @@ function Index() {
                 <a href="#framework" className={btn("outline")}>See how I work</a>
               </div>
             </div>
-            <div className="hero-in relative mx-auto w-full max-w-md [animation-delay:200ms] lg:max-w-[520px]">
+            <div className="hero-in relative mx-auto w-full max-w-md [animation-delay:200ms] lg:max-w-[340px] xl:max-w-[380px]">
               <div aria-hidden="true" className="float absolute -left-4 top-16 z-10 h-12 w-12 rounded-full bg-[radial-gradient(circle_at_30%_30%,var(--gold-light),var(--gold-deep))] shadow-lg [animation-delay:-2s]" />
               <div aria-hidden="true" className="float absolute -right-3 bottom-20 z-10 h-8 w-8 rounded-full bg-[radial-gradient(circle_at_30%_30%,#8fb3ff,var(--blue))] shadow-lg [animation-delay:-4s]" />
               <div className="float navy rounded-t-[999px] rounded-b-[2.5rem] p-2 ring-2 ring-primary/70 ring-offset-4 ring-offset-background shadow-[0_30px_60px_-20px_rgb(10_28_51/0.45)]">
@@ -342,6 +348,9 @@ function Index() {
           </div>
         </section>
 
+        {/* BLOG */}
+        <BlogPreview />
+
         {/* FAQ */}
         <section id="faq" className="mx-auto max-w-4xl px-5 py-20 sm:px-8 lg:py-28">
           <SectionHead eyebrow="FAQ" title="Frequently asked questions" />
@@ -395,5 +404,21 @@ function Index() {
         </div>
       </footer>
     </>
+  );
+}
+
+function BlogPreview() {
+  const { data } = useSuspenseQuery(postsQuery());
+  const latest = (data ?? []).slice(0, 3);
+  return (
+    <section id="blog" className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:py-28">
+      <SectionHead eyebrow="Blog" title="Notes on go-to-market, fundraising and African startups" />
+      {latest.length ? (
+        <div className="mt-12 grid gap-6 md:grid-cols-3">{latest.map((p) => <BlogCard key={p.id} post={p} />)}</div>
+      ) : (
+        <p className="mt-8 text-muted-foreground">New articles are on the way.</p>
+      )}
+      <Link to="/blog" className={`${btn("outline")} mt-10`}>Read the blog</Link>
+    </section>
   );
 }
